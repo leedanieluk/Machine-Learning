@@ -4,14 +4,24 @@ import random
 import matplotlib.pyplot as plt
 
 def linearRegression(x_data, y_data, reps, l_rate):
-    par1 = 0
-    par2 = 0
+    par1 = random.uniform(0, 1)
+    par2 = random.uniform(0, 1)
     print("Init Par1: " + str(par1))
     print("Init Par2: " + str(par2))
 
     for rep in range(reps):
         grad1 = 0
         grad2 = 0
+        cost = 0
+
+        for i in range(len(x_data)):
+            hypothesis = par1 + par2 * x_data[i]
+            cost = cost + ((hypothesis - y_data[i]) ** 2) / 2
+
+        cost = cost / len(x_data)
+        
+        print("Cost: " + str(cost))
+
         for i in range(len(x_data)):
             hypothesis = par1 + par2 * x_data[i]
             error = hypothesis - y_data[i]
@@ -28,10 +38,18 @@ def linearRegression(x_data, y_data, reps, l_rate):
     print("Final Par2: " + str(par2))
     return par1, par2
 
-x_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-y_data = [1, 4, 2, 6, 2, 5, 3, 20, 1, 2, 3, 1, 5]
-reps = 2000
-l_rate = 0.001
+datasize = 20
+x_data = []
+y_data = []
+counter = 0
+
+for data in range(datasize):
+    counter = counter + 1
+    x_data.extend([counter])
+    y_data.extend([counter + random.uniform(-30, 30)])
+
+reps = 10
+l_rate = 0.01
 
 par1, par2 = linearRegression(x_data, y_data, reps, l_rate)
 
